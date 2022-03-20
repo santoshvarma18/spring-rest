@@ -1,10 +1,9 @@
 package com.santosh.springdemo.rest;
 
 import com.santosh.springdemo.entity.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -41,6 +40,14 @@ public class StudentRestController {
     public Student getStudent(@PathVariable int studentId){
 
         // just index into the list ... keep it simple for now
+
+        // check the studendId against list size
+        if((studentId >= theStudents.size()) || (studentId < 0)){
+            throw new StudentNotFoundException("Student id not found - "+studentId);
+        }
+
         return theStudents.get(studentId);
     }
+
+
 }
